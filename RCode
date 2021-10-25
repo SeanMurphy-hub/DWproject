@@ -1,0 +1,36 @@
+###### Other links:
+# (https://www.kaggle.com/debdutta/cost-of-living-index-by-country)
+# (https://www.numbeo.com/cost-of-living/rankings.jsp)
+# (https://www.kaggle.com/rishidamarla/sociological-metrics-of-all-50-states)
+
+
+
+
+
+Code that scrapes all the data and turns it into a data frame in R:
+  rm(list=ls())
+#####
+library(xml2)
+page<-read_html("https://www.numbeo.com/cost-of-living/rankings.jsp?title=2021-mid") 
+class(page) # Result is class xml_document
+page # Print HTML to console
+
+##scrape the main table on the site
+city <- xml_text(xml_find_all(page, "//td[@class='cityOrCountryInIndicesTable']"))
+
+cli<-xml_text(xml_find_all(page,"//tbody/tr/td[3]"))
+
+RentIndex<-xml_text(xml_find_all(page,"//tbody/tr/td[4]"))
+
+cliPlusRentIndex <- xml_text(xml_find_all(page,"//tbody/tr/td[5]"))
+
+GroceriesIndex <- xml_text(xml_find_all(page,"//tbody/tr/td[6]"))
+
+RestaurantPriceIndex <- xml_text(xml_find_all(page,"//tbody/tr/td[7]"))
+
+LocalPurchasingPowerIndex <-xml_text(xml_find_all(page,"//tbody/tr/td[8]"))
+
+ID <- c(1:563)
+
+#create data frame
+col <- data.frame(ID, city, cli,RentIndex,cliPlusRentIndex,GroceriesIndex,RestaurantPriceIndex,LocalPurchasingPowerIndex)
