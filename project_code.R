@@ -41,7 +41,11 @@ LocalPurchasingPowerIndex <-xml_text(xml_find_all(page,"//tbody/tr/td[8]"))
 ID <- c(1:563)
 
 #create data frame
-col <- data.frame(ID, city, cli,RentIndex,cliPlusRentIndex,GroceriesIndex,RestaurantPriceIndex,LocalPurchasingPowerIndex)
+indexes <- data.frame(ID, city, cli,RentIndex,cliPlusRentIndex,GroceriesIndex,RestaurantPriceIndex,LocalPurchasingPowerIndex)
+
+#Filter out the foreign cities
+us_indexes<-subset(indexes,grepl('United States',indexes$city)==T)
+us_indexes$city<-gsub(", United States","",us_indexes$city)
 
 
 ################# Analysis Questions: #################
