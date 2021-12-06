@@ -2,7 +2,8 @@
 # (https://www.kaggle.com/debdutta/cost-of-living-index-by-country)
 # (https://www.numbeo.com/cost-of-living/rankings.jsp)
 
-
+#install.packages('stringr')
+library(stringr)
 rm(list=ls())
 
 # (https://www.kaggle.com/rishidamarla/sociological-metrics-of-all-50-states)
@@ -46,6 +47,14 @@ indexes <- data.frame(ID, city, cli,RentIndex,cliPlusRentIndex,GroceriesIndex,Re
 #Filter out the foreign cities
 us_indexes<-subset(indexes,grepl('United States',indexes$city)==T)
 us_indexes$city<-gsub(", United States","",us_indexes$city)
+
+#split up the city and state into separate columns
+cityst <- strsplit(us_indexes$city, ', ')
+cityst
+us_indexes$state <- c(NA) 
+cityst <- str_split_fixed(us_indexes$city, ', ',2)
+us_indexes$state <- cityst[,2]
+us_indexes$city <- cityst[,1]
 
 
 ################# Analysis Questions: #################
