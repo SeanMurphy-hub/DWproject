@@ -105,6 +105,14 @@ levels(mergeddata$Region)[levels(mergeddata$Region) == "NJ" |
 
 levels(mergeddata$Region)[levels(mergeddata$Region) == "MA"] <- "New England"
 
+######## Change appropriate columns to numeric ########
+mergeddata$cli <- as.numeric(mergeddata$cli)
+mergeddata$RentIndex <- as.numeric(mergeddata$RentIndex)
+mergeddata$cliPlusRentIndex <- as.numeric(mergeddata$cliPlusRentIndex)
+mergeddata$GroceriesIndex <- as.numeric(mergeddata$GroceriesIndex)
+mergeddata$RestaurantPriceIndex <- as.numeric(mergeddata$RestaurantPriceIndex)
+mergeddata$LocalPurchasingPowerIndex <- as.numeric(mergeddata$LocalPurchasingPowerIndex)
+
 ################# Analysis Questions: #################
 
 # (1) - Which region of the U.S. saw cities with the highest population increase and what are those cities' average cost of living index?
