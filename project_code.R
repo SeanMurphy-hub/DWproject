@@ -49,8 +49,6 @@ us_indexes<-subset(indexes,grepl('United States',indexes$city)==T)
 us_indexes$city<-gsub(", United States","",us_indexes$city)
 
 #split up the city and state into separate columns
-cityst <- strsplit(us_indexes$city, ', ')
-cityst
 us_indexes$state <- c(NA) 
 cityst <- str_split_fixed(us_indexes$city, ', ',2)
 us_indexes$state <- cityst[,2]
