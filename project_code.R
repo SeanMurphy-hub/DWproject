@@ -10,7 +10,6 @@ rm(list=ls())
 # Sociological Data File (from Kaggle ['data.csv'])
 socioData <- read.csv("data.csv")
 
-
 ##### Code that scrapes all the data and turns it into a data frame in R:
 library(xml2)
 page<-read_html("https://www.numbeo.com/cost-of-living/rankings.jsp?title=2021-mid") 
@@ -19,17 +18,11 @@ page # Print HTML to console
 
 ##scrape the main table on the site
 city <- xml_text(xml_find_all(page, "//td[@class='cityOrCountryInIndicesTable']"))
-
 cli<-xml_text(xml_find_all(page,"//tbody/tr/td[3]"))
-
 RentIndex<-xml_text(xml_find_all(page,"//tbody/tr/td[4]"))
-
 cliPlusRentIndex <- xml_text(xml_find_all(page,"//tbody/tr/td[5]"))
-
 GroceriesIndex <- xml_text(xml_find_all(page,"//tbody/tr/td[6]"))
-
 RestaurantPriceIndex <- xml_text(xml_find_all(page,"//tbody/tr/td[7]"))
-
 LocalPurchasingPowerIndex <-xml_text(xml_find_all(page,"//tbody/tr/td[8]"))
 
 ID <- c(1:563)
@@ -56,7 +49,7 @@ mergeddata <- merge(us_indexes,socioData, by.x = 'state',by.y = 'State', all.x =
 # Create a 'Region' Factor column
 # According to U.S. Census (https://www2.census.gov/geo/pdfs/maps-data/maps/reference/us_regdiv.pdf)
 mergeddata$Region <- as.factor(mergeddata$state) #Copy of state column
-# Classify levels
+# Merge/Condense levels
 levels(mergeddata$Region)[levels(mergeddata$Region) == "AK" |
                             levels(mergeddata$Region) == "HI" |
                             levels(mergeddata$Region) == "CA" |
