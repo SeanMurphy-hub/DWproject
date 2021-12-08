@@ -56,6 +56,11 @@ cityst <- str_split_fixed(us_indexes$city, ', ',2)
 us_indexes$state <- cityst[,2]
 us_indexes$city <- cityst[,1]
 
+#transform sociodata$State to match us_indexes$state
+socioData$State <- state.abb[match(socioData$State,state.name)]
+
+#merge the sociodata with us_indexes
+mergeddata <- merge(us_indexes,socioData, by.x = 'state',by.y = 'State', all.x =T )
 
 ################# Analysis Questions: #################
 
