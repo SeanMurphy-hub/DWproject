@@ -8,14 +8,7 @@ rm(list=ls())
 
 # (https://www.kaggle.com/rishidamarla/sociological-metrics-of-all-50-states)
 # Sociological Data File (from Kaggle ['data.csv'])
-# Features:
-# State [chr]
-# Percent.Educational.Attainment [num]
-# Percent.Peace.Index [num]
-# Percent.Above.Poverty.Rate [num]
-# Percent.Non.religious [int]
 socioData <- read.csv("data.csv")
-
 
 
 ##### Code that scrapes all the data and turns it into a data frame in R:
@@ -59,6 +52,58 @@ socioData$State <- state.abb[match(socioData$State,state.name)]
 
 #merge the sociodata with us_indexes
 mergeddata <- merge(us_indexes,socioData, by.x = 'state',by.y = 'State', all.x =T )
+
+# Create a 'Region' Factor column
+# According to U.S. Census (https://www2.census.gov/geo/pdfs/maps-data/maps/reference/us_regdiv.pdf)
+mergeddata$Region <- as.factor(mergeddata$state) #Copy of state column
+# Classify levels
+levels(mergeddata$Region)[levels(mergeddata$Region) == "AK" |
+                            levels(mergeddata$Region) == "HI" |
+                            levels(mergeddata$Region) == "CA" |
+                            levels(mergeddata$Region) == "OR" |
+                            levels(mergeddata$Region) == "WA"] <- "Pacific West"
+
+levels(mergeddata$Region)[levels(mergeddata$Region) == "AZ" |
+                            levels(mergeddata$Region) == "CO" |
+                            levels(mergeddata$Region) == "ID" |
+                            levels(mergeddata$Region) == "NM" |
+                            levels(mergeddata$Region) == "UT" |
+                            levels(mergeddata$Region) == "NV"] <- "Mountain West"
+
+levels(mergeddata$Region)[levels(mergeddata$Region) == "AR" |
+                            levels(mergeddata$Region) == "LA" |
+                            levels(mergeddata$Region) == "OK" |
+                            levels(mergeddata$Region) == "TX"] <- "West South Central"
+
+levels(mergeddata$Region)[levels(mergeddata$Region) == "AL" |
+                            levels(mergeddata$Region) == "KY" |
+                            levels(mergeddata$Region) == "TN"] <- "East South Central"
+
+levels(mergeddata$Region)[levels(mergeddata$Region) == "DC" |
+                            levels(mergeddata$Region) == "FL" |
+                            levels(mergeddata$Region) == "GA" |
+                            levels(mergeddata$Region) == "MD" |
+                            levels(mergeddata$Region) == "NC" |
+                            levels(mergeddata$Region) == "SC" |
+                            levels(mergeddata$Region) == "VA"] <- "South Atlantic"
+
+levels(mergeddata$Region)[levels(mergeddata$Region) == "IA" |
+                            levels(mergeddata$Region) == "KS" |
+                            levels(mergeddata$Region) == "MN" |
+                            levels(mergeddata$Region) == "MO" |
+                            levels(mergeddata$Region) == "NE"] <- "West North Central"
+
+levels(mergeddata$Region)[levels(mergeddata$Region) == "IN" |
+                            levels(mergeddata$Region) == "IL" |
+                            levels(mergeddata$Region) == "MI" |
+                            levels(mergeddata$Region) == "OH" |
+                            levels(mergeddata$Region) == "WI"] <- "East North Central"
+
+levels(mergeddata$Region)[levels(mergeddata$Region) == "NJ" |
+                            levels(mergeddata$Region) == "NY" |
+                            levels(mergeddata$Region) == "PA"] <- "Middle Atlantic"
+
+levels(mergeddata$Region)[levels(mergeddata$Region) == "MA"] <- "New England"
 
 ################# Analysis Questions: #################
 
