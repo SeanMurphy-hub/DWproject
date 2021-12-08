@@ -56,7 +56,7 @@ cityst <- str_split_fixed(us_indexes$city, ', ',2)
 us_indexes$state <- cityst[,2]
 us_indexes$city <- cityst[,1]
 
-#transform sociodata$State to match us_indexes$state
+#transform name of the states in sociodata to match the state abbreviations in us_indexes
 socioData$State <- state.abb[match(socioData$State,state.name)]
 
 #merge the sociodata with us_indexes
