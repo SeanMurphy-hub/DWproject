@@ -18,12 +18,24 @@ page # Print HTML to console
 
 ##scrape the main table on the site
 city <- xml_text(xml_find_all(page, "//td[@class='cityOrCountryInIndicesTable']"))
+
 cli<-xml_text(xml_find_all(page,"//tbody/tr/td[3]"))
+cli <- as.numeric(cli)
+
 RentIndex<-xml_text(xml_find_all(page,"//tbody/tr/td[4]"))
+RentIndex <- as.numeric(RentIndex)
+
 cliPlusRentIndex <- xml_text(xml_find_all(page,"//tbody/tr/td[5]"))
+cliPlusRentIndex <- as.numeric(cliPlusRentIndex)
+
 GroceriesIndex <- xml_text(xml_find_all(page,"//tbody/tr/td[6]"))
+GroceriesIndex <- as.numeric(GroceriesIndex)
+
 RestaurantPriceIndex <- xml_text(xml_find_all(page,"//tbody/tr/td[7]"))
+RestaurantPriceIndex <- as.numeric(RestaurantPriceIndex)
+
 LocalPurchasingPowerIndex <-xml_text(xml_find_all(page,"//tbody/tr/td[8]"))
+LocalPurchasingPowerIndex <- as.numeric(LocalPurchasingPowerIndex)
 
 ID <- c(1:563)
 
