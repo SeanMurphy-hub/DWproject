@@ -1,7 +1,7 @@
 ###### Other links:
 # (https://www.kaggle.com/debdutta/cost-of-living-index-by-country)
-# (https://www.numbeo.com/cost-of-living/rankings.jsp)
-
+# (https://www.numbeo.com/cost-of-living/rankings.jsp) ##site we scraped from
+#
 #install.packages('stringr')
 library(stringr)
 rm(list=ls())
@@ -10,13 +10,17 @@ rm(list=ls())
 # Sociological Data File (from Kaggle ['data.csv'])
 socioData <- read.csv("data.csv")
 
+#(https://worldpopulationreview.com/us-cities) population growth data
+  ##CSV download from the site is named csvData.csv
+population_change<-read.csv('csvData.csv') 
+
 ##### Code that scrapes all the data and turns it into a data frame in R:
 library(xml2)
 page<-read_html("https://www.numbeo.com/cost-of-living/rankings.jsp?title=2021-mid") 
 class(page) # Result is class xml_document
 page # Print HTML to console
 
-##scrape the main table on the site
+###Scrape the main table on the site and make appropriate columns numeric
 city <- xml_text(xml_find_all(page, "//td[@class='cityOrCountryInIndicesTable']"))
 
 cli<-xml_text(xml_find_all(page,"//tbody/tr/td[3]"))
@@ -110,13 +114,24 @@ levels(mergeddata$Region)[levels(mergeddata$Region) == "NJ" |
 
 levels(mergeddata$Region)[levels(mergeddata$Region) == "MA"] <- "New England"
 
-######## Change appropriate columns to numeric ########
-mergeddata$cli <- as.numeric(mergeddata$cli)
-mergeddata$RentIndex <- as.numeric(mergeddata$RentIndex)
-mergeddata$cliPlusRentIndex <- as.numeric(mergeddata$cliPlusRentIndex)
-mergeddata$GroceriesIndex <- as.numeric(mergeddata$GroceriesIndex)
-mergeddata$RestaurantPriceIndex <- as.numeric(mergeddata$RestaurantPriceIndex)
-mergeddata$LocalPurchasingPowerIndex <- as.numeric(mergeddata$LocalPurchasingPowerIndex)
+### Clean and combine the population growth data with mergeddata 
+# Remove unwanted data columns, only keep state name and population growth
+population_change <- population_change[,c(2,6)]
+# Change NYC name to New York to match mergeddata. 
+population_change[1,1] <- "New York"
+
+alldatamerged <- merge(mergeddata,population_change,by.x='city',by.y = 'name')
+
+
+### Summary statistics ###
+
+# Average cli in general
+mean(alldatamerged$cli)
+
+# Average cli by region
+meanCliByRegion<-aggregate(alldatamerged$cli,
+              by=list(alldatamerged$Region), # grouping
+              FUN=mean)
 
 ################# Analysis Questions: #################
 
