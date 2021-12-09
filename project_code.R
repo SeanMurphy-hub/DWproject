@@ -136,6 +136,7 @@ meanCliByRegion<-aggregate(alldatamerged$cli,
 ################# Analysis Questions: #################
 
 # (1) - Which region of the U.S. saw cities with the highest population increase and what are those cities' average cost of living index?
+
 question_1a<-alldatamerged %>%
   group_by(Region) %>%
   summarise(mean_population_change=mean(growth)) %>%
@@ -146,6 +147,18 @@ question_1b<-alldatamerged %>%
 #The South Atlantic region had the highest mean population growth among its included cities and those cities' average CLI was 73.12667. 
 
 # (2) - Are there any relationships between population change and the cost of housing?
+
+reg<-lm(alldatamerged$growth~alldatamerged$cli+alldatamerged$RentIndex+alldatamerged$GroceriesIndex+alldatamerged$RestaurantPriceIndex+alldatamerged$LocalPurchasingPowerIndex)
+summary(reg)
+
+rent_reg<-lm(alldatamerged$RentIndex~alldatamerged$growth)
+summary(rent_reg)
+
+plot(alldatamerged$RentIndex~alldatamerged$growth)
+abline(rent_reg)
+
+#The r-squared value is very small, so population growth does not appear to account for much of the variability in the cost of housing, but there is a positive correlation 
+#between the two variables, and the p-value (.0337) of the growth variable indicates it is a significant predictor of rent index. 
 
 # (3) - Did cities in states with decreasing populations have a lower educational achievement then those with higher educational achievement?
 # Are there any relationships that can be extracted from educational achievement and other sociological factors?
