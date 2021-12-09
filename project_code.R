@@ -160,7 +160,18 @@ abline(rent_reg)
 #The r-squared value is very small, so population growth does not appear to account for much of the variability in the cost of housing, but there is a positive correlation 
 #between the two variables, and the p-value (.0337) of the growth variable indicates it is a significant predictor of rent index. 
 
-# (3) - Did cities in states with decreasing populations have a lower educational achievement then those with higher educational achievement?
-# Are there any relationships that can be extracted from educational achievement and other sociological factors?
+# (3) - Did cities with decreasing populations have a lower educational attainment than those with increasing populations?
+
+alldatamerged<-alldatamerged %>%
+  mutate(growth_binary=case_when(
+    growth>0~"Growth",
+    growth<=0~"Non-Growth"
+  ))
+
+question_3<-alldatamerged %>%
+  group_by(growth_binary) %>%
+  summarise(mean_education=mean(Percent.Educational.Attainment,na.rm = T))
+  
+#No, the two mean education levels are almost identical, and if anything, cities that did not have population growth had higher educational attainment. 
 
 # (4) - What are the top three cities that have the highest and lowest local purchasing power and what are those cities' state crime index?
