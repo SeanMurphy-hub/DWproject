@@ -136,7 +136,14 @@ meanCliByRegion<-aggregate(alldatamerged$cli,
 ################# Analysis Questions: #################
 
 # (1) - Which region of the U.S. saw cities with the highest population increase and what are those cities' average cost of living index?
-# How does that compare to cities with population decreases?
+question_1a<-alldatamerged %>%
+  group_by(Region) %>%
+  summarise(mean_population_change=mean(growth)) %>%
+  arrange(desc(mean_population_change))
+question_1b<-alldatamerged %>%
+  filter(Region=='South Atlantic') %>%
+  summarise(south_atlantic_mean_cli=mean(cli))
+#The South Atlantic region had the highest mean population growth among its included cities and those cities' average CLI was 73.12667. 
 
 # (2) - Are there any relationships between population change and the cost of housing?
 
