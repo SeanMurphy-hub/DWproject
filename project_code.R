@@ -2,9 +2,11 @@
 # (https://www.kaggle.com/debdutta/cost-of-living-index-by-country)
 # (https://www.numbeo.com/cost-of-living/rankings.jsp) ##site we scraped from
 #
-#install.packages('stringr')
-library(stringr)
 rm(list=ls())
+#install.packages('stringr')
+#install.packages("dplyr")
+library(dplyr)
+library(stringr)
 
 # (https://www.kaggle.com/rishidamarla/sociological-metrics-of-all-50-states)
 # Sociological Data File (from Kaggle ['data.csv'])
