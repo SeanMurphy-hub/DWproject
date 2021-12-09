@@ -174,4 +174,18 @@ question_3<-alldatamerged %>%
   
 #No, the two mean education levels are almost identical, and if anything, cities that did not have population growth had higher educational attainment. 
 
-# (4) - What are the top three cities that have the highest and lowest local purchasing power and what are those cities' state crime index?
+# (4) - What are the top three cities that have the highest and lowest local purchasing power?
+
+top_three_df<-alldatamerged %>%
+  top_n(3,alldatamerged$LocalPurchasingPowerIndex) %>%
+  arrange(desc(LocalPurchasingPowerIndex))
+
+top_three<-top_three_df$city
+top_three
+
+bottom_three_df<-alldatamerged %>%
+  top_n(-3,alldatamerged$LocalPurchasingPowerIndex) %>%
+  arrange(LocalPurchasingPowerIndex)
+
+bottom_three<-bottom_three_df$city
+bottom_three
