@@ -156,8 +156,8 @@ summary(reg)
 rent_reg<-lm(alldatamerged$RentIndex~alldatamerged$growth)
 summary(rent_reg)
 
-plot(alldatamerged$RentIndex~alldatamerged$growth)
-abline(rent_reg)
+plot(alldatamerged$RentIndex~alldatamerged$growth, main = "Population Growth vs. Rent Index", xlab = "Population Growth", ylab = "Rent Index")
+abline(rent_reg, col = "red")
 
 #The r-squared value is very small, so population growth does not appear to account for much of the variability in the cost of housing, but there is a positive correlation 
 #between the two variables, and the p-value (.0337) of the growth variable indicates it is a significant predictor of rent index. 
