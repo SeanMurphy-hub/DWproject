@@ -146,6 +146,14 @@ question_1a<-alldatamerged %>%
 question_1b<-alldatamerged %>%
   filter(Region=='South Atlantic') %>%
   summarise(south_atlantic_mean_cli=mean(cli))
+
+
+# Plot visualizing average CLI by region
+barplot(meanCliByRegion$x,xlab="CLI", main="CLI By Region", names.arg=meanCliByRegion$Group.1, horiz=T, las=1, col=c("darkgray","darkgray","darkgray",
+                                                                                                                     "darkgray","red","darkgray",
+                                                                                                                     "darkgray","darkgray","darkgray"))
+
+
 #The South Atlantic region had the highest mean population growth among its included cities and those cities' average CLI was 73.12667. 
 
 # (2) - Are there any relationships between population change and the cost of housing?
