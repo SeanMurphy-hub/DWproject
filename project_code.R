@@ -127,8 +127,16 @@ alldatamerged <- merge(mergeddata,population_change,by.x='city',by.y = 'name')
 
 ### Summary statistics ###
 
-# Average cli in general
+# Mean, minimum, maximum cli, and the quartiles (50% =Q2 = median)
 mean(alldatamerged$cli)
+min(alldatamerged$cli)
+max(alldatamerged$cli)
+quantile(alldatamerged$cli)
+
+# Histograms of the cli, RentIndex, and GroceriesIndex to compare distributions
+hist(alldatamerged$cli, main="Distribution of Cost of Living", xlab = "Cost of Living", col='orange')
+hist(alldatamerged$RentIndex, main="Distribution of Rent Index", xlab = "Rent Index", col='pink')
+hist(alldatamerged$GroceriesIndex, main="Distribution of Groceries Index", xlab = "Groceries Index", col='yellow')
 
 # Average cli by region
 meanCliByRegion<-aggregate(alldatamerged$cli,
@@ -205,7 +213,6 @@ top_three_df<-alldatamerged %>%
 
 top_three<-top_three_df$city
 top_three
-#Of the cities in our dataset, Salt Lake City, San Jose, and Charlotte residents have the most purchasing power.
 
 bottom_three_df<-alldatamerged %>%
   top_n(-3,alldatamerged$LocalPurchasingPowerIndex) %>%
@@ -213,11 +220,3 @@ bottom_three_df<-alldatamerged %>%
 
 bottom_three<-bottom_three_df$city
 bottom_three
-#Of the cities in our dataset, Tucson, Miami, and Honolulu residents have the least purchasing power.
-
-#Corrleation between purchasing power and growth rate
-purchase_power_growth <- cor(alldatamerged$LocalPurchasingPowerIndex,alldatamerged$growth)
-purchase_power_growth
-
-#Local purchasing power and growth rate have a correlation of 0.1567. This indicates a weak, 
-#positive relationship between the two variables.
