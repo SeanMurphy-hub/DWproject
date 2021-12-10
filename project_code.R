@@ -1,5 +1,4 @@
 ###### Other links:
-# (https://www.kaggle.com/debdutta/cost-of-living-index-by-country)
 # (https://www.numbeo.com/cost-of-living/rankings.jsp) ##site we scraped from
 #
 rm(list=ls())
