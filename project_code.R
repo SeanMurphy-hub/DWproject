@@ -156,6 +156,8 @@ summary(reg)
 rent_reg<-lm(alldatamerged$RentIndex~alldatamerged$growth)
 summary(rent_reg)
 
+cor(alldatamerged$growth, alldatamerged$RentIndex) # Correlation = 0.2377455
+
 plot(alldatamerged$RentIndex~alldatamerged$growth, main = "Population Growth vs. Rent Index", xlab = "Population Growth", ylab = "Rent Index")
 abline(rent_reg, col = "red")
 
