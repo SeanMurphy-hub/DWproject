@@ -184,7 +184,18 @@ question_3<-alldatamerged %>%
   group_by(growth_binary) %>%
   summarise(mean_education=mean(Percent.Educational.Attainment,na.rm = T))
   
-#No, the two mean education levels are almost identical, and if anything, cities that did not have population growth had higher educational attainment. 
+#No, the two mean education levels are almost identical, and if anything, cities that did not have population growth had higher educational attainment.
+
+#t-test to confirm our analysis from summary table
+decreasing_pop_edu <- alldatamerged[alldatamerged$growth_binary=="Non-Growth",
+                                    "Percent.Educational.Attainment"]
+increasing_pop_edu <- alldatamerged[alldatamerged$growth_binary=="Growth",
+                                    "Percent.Educational.Attainment"]
+
+t.test(decreasing_pop_edu, increasing_pop_edu)
+
+#The t-test has a p-value of 0.9018. Thus, we cannot reject HO that the average mean educational attainment
+#differs for states with population increase vs. those with population decrease.
 
 # (4) - What are the top three cities that have the highest and lowest local purchasing power?
 
